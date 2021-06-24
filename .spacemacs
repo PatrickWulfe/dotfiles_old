@@ -44,7 +44,7 @@ This function should only modify configuration layer settings."
      colors
      csharp
      dap
-     (dart :variables lsp-dart-sdk-dir "/home/patrick/dev/sdks/flutter/bin/cache/dart-sdk/" dart-server-format-on-save t)
+     (dart :variables lsp-dart-sdk-dir "/home/patrick/dev/sdks/flutter/bin/cache/dart-sdk" dart-server-format-on-save t)
      debug
      docker
      emacs-lisp
@@ -277,7 +277,7 @@ It should only modify the values of Spacemacs settings."
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
    dotspacemacs-default-font '("Fira Code"
-                               :size 14.0
+                               :size 13.0
                                :weight normal
                                :width normal)
 

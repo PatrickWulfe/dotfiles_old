@@ -20,6 +20,7 @@
 
 ;; Folder locations
 (setq org-directory "~/org/")
+
 #+end_src
 
 * TODO Keybinds and other functions
@@ -40,6 +41,13 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; Flutter
+(use-package lsp-mode :ensure t)
+(use-package lsp-dart
+  :ensure t
+  :hook (dart-mode . lsp))
+
 (map! :leader
       (:prefix ("-" . "open file")
        :desc "Edit agenda file" "a" #'(lambda () (interactive) (find-file "~/Org/agenda.org"))

@@ -15,7 +15,6 @@ alias cdc "cd $HOME/.config"
 alias cdd "cd $HOME/dev/"
 alias cds "cd $HOME/dev/src"
 alias cdfi "cd $IMPORT_LOC"
-alias doom "~/.emacs.d/bin/doom"
 
 # for dotfiles
 alias dfg "/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
@@ -23,5 +22,5 @@ alias dfg "/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 # Utility stuff
 alias uwu "sudo apt update && sudo apt upgrade"
 alias e. "nautilus ."
-alias c. "code ."
-alias studio "~/.local/android-studio/bin/studio.sh"
+alias c. "emacs ."
+alias doom "~/.emacs.d/bin/doom"
