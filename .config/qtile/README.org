@@ -258,7 +258,7 @@ layouts = [
     layout.Max(**layout_theme)
 ]
 #+end_src
-* BAR
+* COMMENT BAR
 #+begin_src python
 ############################################################
 ## => BAR
