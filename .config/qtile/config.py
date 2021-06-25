@@ -8,8 +8,13 @@ import subprocess
 from libqtile.config import Drag, Key, Screen, Group, Drag, Click, Rule
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
-from libqtile.widget import Spacer, Mpd2
+from libqtile.widget import Spacer
+from random import randint
 #import arcobattery
+
+############################################################
+## => INIT
+############################################################
 
 ############################################################
 # => COLORS
@@ -54,12 +59,6 @@ mod                     = "mod4"
 mod1                    = "alt"
 mod2                    = "control"
 home                    = os.path.expanduser('~')
-
-browser                 = "google-chrome-stable"
-terminal                = "alacritty"
-filemanager             = "nautilus"
-editor                  = "emacs"
-email                   = "thunderbird"
 
 @lazy.function
 def window_to_prev_group(qtile):
@@ -250,12 +249,15 @@ def init_widgets_defaults():
                 background=color0)
 
 widget_defaults = init_widgets_defaults()
-bgcolors = [color1, color3, color4]
-fgcolors = [color0, color0, color0]
 
 def init_widgets_list():
     prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
-    index = 0 # to make sure the bg color always alternates
+    bgcolors = [color1, color2, color3, color5, color4]
+    arr_len = len(bgcolors)
+    foreground = color0
+    index = randint(0, arr_len - 1) # to make sure the bg color always alternates and the colors randomize
+    divider_size = 37
+    padding = 10
     widgets_list = [
                widget.GroupBox(font="FiraCode Nerd Font",
                         fontsize = 16,
@@ -265,59 +267,59 @@ def init_widgets_list():
                         padding_x = 5,
                         borderwidth = 0,
                         disable_drag = True,
-                        active = color9,
-                        inactive = color5,
+                        active = color6,
+                        inactive = color8,
                         rounded = False,
                         highlight_method = "text",
                         this_current_screen_border = color7,
-                        foreground = bgcolors[index % 3],
+                        foreground = bgcolors[(index:=index+1) % arr_len],
                         background = color0
                         ),
                widget.Sep(
                         linewidth = 1,
-                        padding = 10,
-                        foreground = bgcolors[index % 3],
+                        padding = padding,
+                        foreground = bgcolors[index % arr_len],
                         background = color0
                         ),
                widget.CurrentLayout(
-                        foreground = bgcolors[index % 3],
+                        foreground = bgcolors[index % arr_len],
                         background = color0
                         ),
                widget.Sep(
                         linewidth = 1,
-                        padding = 10,
-                        foreground = bgcolors[index % 3],
+                        padding = padding,
+                        foreground = bgcolors[index % arr_len],
                         background = color0
                         ),
                widget.WindowName(
                         fontsize = 14,
-                        foreground = bgcolors[(index:=index+1) % 3],
+                        foreground = bgcolors[(index:=index+1) % arr_len],
                         background = color0,
                         ),
                # widget.Mpd2(
                #          background = color0,
                #          foreground = color6,
                #          ),
-               widget.TextBox(text = ' ', background = color0, foreground = bgcolors[(index + 1) % 3], margin_y = 20, padding = -1, fontsize = 37),
                # widget.Net(
                #          font="Noto Sans",
                #          fontsize=12,
                #          interface="enp0s31f6",
                #          foreground = "#FFFFFF",
-               #          background = bgcolors[index % 3],
+               #          background = bgcolors[index % arr_len],
                #          padding = 0,
                #          ),
                # widget.Sep(
                #          linewidth = 1,
-               #          padding = 10,
-               #          foreground = fgcolors[index % 3],
-               #          background = bgcolors[index % 3]
+               #          padding = padding,
+               #          foreground = foreground,
+               #          background = bgcolors[index % arr_len]
                #          ),
+               widget.TextBox(text = ' ', background = color0, foreground = bgcolors[(index:=index + 1) % arr_len], margin_y = 20, padding = -1, fontsize = divider_size),
                widget.TextBox(
                         font="FiraCode Nerd Font",
                         text=" ﯱ",
-                        foreground = fgcolors[(index:=index+1) % 3],
-                        background = bgcolors[index % 3],
+                        foreground = foreground,
+                        background = bgcolors[index % arr_len],
                         padding = 0,
                         fontsize=18
                         ),
@@ -327,8 +329,8 @@ def init_widgets_list():
                         bandwidth="down",
                         interface="auto",
                         fill_color = color0,
-                        foreground = fgcolors[index % 3],
-                        background = bgcolors[index % 3],
+                        foreground = foreground,
+                        background = bgcolors[index % arr_len],
                         graph_color = color0,
                         border_color = color0,
                         padding = 0,
@@ -338,15 +340,15 @@ def init_widgets_list():
                         ),
                # widget.Sep(
                #          linewidth = 1,
-               #          padding = 10,
-#                        foreground = fgcolors[index % 3],
-                        # background = bgcolors[index % 3]
+               #          padding = padding,
+#                        foreground = foreground,
+                        # background = bgcolors[index % arr_len]
                #          ),
                # # do not activate in Virtualbox - will break qtile
                # widget.ThermalSensor(
-#                        foreground = fgcolors[index % 3],
+#                        foreground = foreground,
                #          foreground_alert = color6,
-                        # background = bgcolors[index % 3]
+                        # background = bgcolors[index % arr_len]
                #          metric = True,
                #          padding = 3,
                #          threshold = 80
@@ -354,9 +356,9 @@ def init_widgets_list():
                # # battery option 1  ArcoLinux Horizontal icons do not forget to import arcobattery at the top
                # widget.Sep(
                #          linewidth = 1,
-               #          padding = 10,
-#                        foreground = fgcolors[index % 3],
-                        # background = bgcolors[index % 3]
+               #          padding = padding,
+#                        foreground = foreground,
+                        # background = bgcolors[index % arr_len]
                #          ),
                # arcobattery.BatteryIcon(
                #          padding=0,
@@ -364,28 +366,28 @@ def init_widgets_list():
                #          y_poss=2,
                #          theme_path=home + "/.config/qtile/icons/battery_icons_horiz",
                #          update_interval = 5,
-                        # background = bgcolors[index % 3]
+                        # background = bgcolors[index % arr_len]
                #          ),
                # # battery option 2  from Qtile
                # widget.Sep(
                #          linewidth = 1,
-               #          padding = 10,
-               #          foreground = fgcolors[index % 3],
-               #          background = bgcolors[index % 3]
+               #          padding = padding,
+               #          foreground = foreground,
+               #          background = bgcolors[index % arr_len]
                #          ),
-               widget.TextBox(text = ' ', background = bgcolors[index % 3], foreground = bgcolors[(index + 1) % 3], margin_y = 20, padding = -1, fontsize = 37),
+               widget.TextBox(text = ' ', background = bgcolors[index % arr_len], foreground = bgcolors[(index:=index + 1) % arr_len], margin_y = 20, padding = -1, fontsize = divider_size),
                # widget.Battery(
                #          font="Noto Sans",
                #          update_interval = 10,
                #          fontsize = 12,
-                        # foreground = fgcolors[(index:=index+1) % 3],
-                        # background = bgcolors[index % 3]
+                        # foreground = foreground,
+                        # background = bgcolors[index % arr_len]
 	             #          ),
                widget.TextBox(
                         font="FiraCode Nerd Font",
                         text="  ",
-                        foreground = fgcolors[(index:=index+1) % 3],
-                        background = bgcolors[index % 3],
+                        foreground = foreground,
+                        background = bgcolors[index % arr_len],
                         padding = 0,
                         fontsize=16
                         ),
@@ -393,7 +395,7 @@ def init_widgets_list():
                         border_color = color0,
                         fill_color = color0,
                         graph_color = color0,
-                        background = bgcolors[index % 3],
+                        background = bgcolors[index % arr_len],
                         border_width = 0,
                         line_width = 1,
                         core = "all",
@@ -402,16 +404,16 @@ def init_widgets_list():
                         ),
                # widget.Sep(
                #          linewidth = 1,
-               #          padding = 10,
-               #          foreground = fgcolors[index % 3],
-               #          background = bgcolors[index % 3]
+               #          padding = padding,
+               #          foreground = foreground,
+               #          background = bgcolors[index % arr_len]
                #          ),
-               widget.TextBox(text = ' ', background = bgcolors[index % 3], foreground = bgcolors[(index + 1) % 3], margin_y = 20, padding = -1, fontsize = 37),
+               widget.TextBox(text = ' ', background = bgcolors[index % arr_len], foreground = bgcolors[(index:=index + 1) % arr_len], margin_y = 20, padding = -1, fontsize = divider_size),
                widget.TextBox(
                         font="FiraCode Nerd Font",
                         text="  ",
-                        foreground = fgcolors[(index:=index+1) % 3],
-                        background = bgcolors[index % 3],
+                        foreground = foreground,
+                        background = bgcolors[index % arr_len],
                         padding = 0,
                         fontsize=16
                         ),
@@ -420,37 +422,37 @@ def init_widgets_list():
                         format = '{MemUsed}M/{MemTotal}M',
                         update_interval = 1,
                         fontsize = 12,
-                        foreground = fgcolors[index % 3],
-                        background = bgcolors[index % 3]
+                        foreground = foreground,
+                        background = bgcolors[index % arr_len]
                        ),
                # widget.Sep(
                #          linewidth = 1,
-               #          padding = 10,
-               #          foreground = fgcolors[index % 3],
-               #          background = bgcolors[index % 3]
+               #          padding = padding,
+               #          foreground = foreground,
+               #          background = bgcolors[index % arr_len]
                #          ),
-               widget.TextBox(text = ' ', background = bgcolors[index % 3], foreground = bgcolors[(index + 1) % 3], margin_y = 20, padding = -1, fontsize = 37),
+               widget.TextBox(text = ' ', background = bgcolors[index % arr_len], foreground = bgcolors[(index:=index + 1) % arr_len], margin_y = 20, padding = -1, fontsize = divider_size),
                widget.TextBox(
                         font="FiraCode Nerd Font",
                         text="  ",
-                        foreground = fgcolors[(index:=index+1) % 3],
-                        background = bgcolors[index % 3],
+                        foreground = foreground,
+                        background = bgcolors[index % arr_len],
                         padding = 0,
                         fontsize=16
                         ),
                widget.Clock(
-                        foreground = fgcolors[index % 3],
-                        background = bgcolors[index % 3],
+                        foreground = foreground,
+                        background = bgcolors[index % arr_len],
                         fontsize = 14,
                         format="%Y-%m-%d %H:%M"
                         ),
                # widget.Sep(
                #          linewidth = 1,
-               #          padding = 10,
-               #          foreground = fgcolors[index % 3],
-               #          background = bgcolors[index % 3]
+               #          padding = padding,
+               #          foreground = foreground,
+               #          background = bgcolors[index % arr_len]
                #          ),
-               widget.TextBox(text = ' ', background = bgcolors[index % 3], foreground = color0, margin_y = 20, padding = -1, fontsize = 37),
+               widget.TextBox(text = ' ', background = bgcolors[index % arr_len], foreground = color0, margin_y = 20, padding = -1, fontsize = divider_size),
                widget.Systray(
                         background = color0,
                         icon_size=20,
@@ -495,12 +497,11 @@ mouse = [
 dgroups_key_binder = None
 dgroups_app_rules = []
 
-# ASSIGN APPLICATIONS TO A SPECIFIC GROUPNAME
-# BEGIN
-
 ############################################################
 ## => ASSIGN APPS TO GROUPS
 ############################################################
+# ASSIGN APPLICATIONS TO A SPECIFIC GROUPNAME
+# BEGIN
 # @hook.subscribe.client_new
 # def assign_app_group(client):
 #     d = {}

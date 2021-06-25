@@ -50,3 +50,4 @@
 ;(unpin! t)
 
 (package! lsp-dart)
+(package! hover)

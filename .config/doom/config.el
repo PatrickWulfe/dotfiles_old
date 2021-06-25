@@ -14,6 +14,9 @@
 ;; Folder locations
 (setq org-directory "~/org/")
 
+;; evil-snipe
+;(evil-snipe-scope 'visible)
+
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -36,7 +39,9 @@
 (use-package lsp-dart
   :ensure t
   :hook (dart-mode . lsp))
+(use-package hover :ensure t)
 
+;; Config files
 (map! :leader
       (:prefix ("-" . "open file")
        :desc "Edit agenda file" "a" #'(lambda () (interactive) (find-file "~/Org/agenda.org"))
