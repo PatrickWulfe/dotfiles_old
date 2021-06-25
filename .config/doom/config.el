@@ -1,55 +1,40 @@
-;; User info
 (setq user-full-name "Patrick Wulfe"
       user-mail-address "wulfep@gmail.com")
 
-;; UI
 (setq doom-font (font-spec :family "Fira Code" :size 16 :weight 'medium)
       doom-variable-pitch-font (font-spec :family "Noto Sans" :size 13)
       doom-big-font (font-spec :family "Literation Sans")
       )
+
 (setq doom-theme 'my-doom-horizon)
+
 (setq display-line-numbers-type 'relative)
+
+(setq scroll-margin 10)
+
 (setq confirm-kill-emacs nil)
 
-;; Folder locations
+(setq auto-save-default t
+      make-backup-files t)
+
 (setq org-directory "~/org/")
 
-;; evil-snipe
-;(evil-snipe-scope 'visible)
+(map! :leader
+      (:desc "Go to test/implimentation file" "f t" #'projectile-toggle-between-implimentation-and-test))
 
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
+(map! :leader
+      :desc "Org babel tangle" "m B" #'org-babel-tangle)
 
-;; Flutter
+(map! :leader
+        (:prefix ("f ." . "open dotfile")
+         :desc "Edit doom config.org" "d" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
+         :desc "Edit qtile README.org" "q" #'(lambda () (interactive) (find-file "~/.config/qtile/README.org"))
+         :desc "Edit alacritty alacritty.yml" "a" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
+         :desc "Open fish folder" "f" #'(lambda () (interactive) (find-file "~/.config/fish"))
+         ))
+
 (use-package lsp-mode :ensure t)
 (use-package lsp-dart
   :ensure t
   :hook (dart-mode . lsp))
 (use-package hover :ensure t)
-
-;; Config files
-(map! :leader
-      (:prefix ("-" . "open file")
-       :desc "Edit agenda file" "a" #'(lambda () (interactive) (find-file "~/Org/agenda.org"))
-       :desc "Edit doom config.org" "c" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
-       :desc "Edit eshell aliases" "e a" #'(lambda () (interactive) (find-file "~/.config/doom/eshell/aliases"))
-       :desc "Edit eshell profile" "e p" #'(lambda () (interactive) (find-file "~/.config/doom/eshell/profile"))
-       :desc "Edit doom init.el" "i" #'(lambda () (interactive) (find-file "~/.config/doom/init.el"))
-       :desc "Edit doom packages.el" "p" #'(lambda () (interactive) (find-file "~/.config/doom/packages.el"))))
-
-(map! :leader
-      :desc "Org babel tangle" "m B" #'org-babel-tangle)
