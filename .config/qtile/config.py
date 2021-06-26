@@ -548,6 +548,10 @@ def start_once():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/scripts/autostart.sh'])
 
+@hook.subscribe.startup_complete
+def start_comp():
+    lazy.restart()
+
 #@hook.subscribe.startup
 #def start_always():
     # Set the cursor to something sane in X

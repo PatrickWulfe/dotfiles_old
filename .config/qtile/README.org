@@ -571,6 +571,7 @@ dgroups_app_rules = []
 #+end_src
 
 * FUNCTIONS
+** Hooks
 #+begin_src python
 ############################################################
 ## => FUNCTIONS
@@ -624,7 +625,7 @@ floating_layout = layout.Floating(float_rules=[
     {'wname': 'pinentry'},
     {'wmclass': 'ssh-askpass'},
 
-],  fullscreen_border_width = 0, border_width = 0)
+],  fullscreen_border_width = 2, border_width = 2)
 auto_fullscreen = True
 
 focus_on_window_activation = "focus" # or smart
