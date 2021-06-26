@@ -59,7 +59,6 @@
 - Add error next/prev stuff
 - Add jump to test file
 - Add binds for dotfiles
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -93,14 +92,16 @@
 (map! :leader
         (:prefix ("f ." . "open dotfile")
          :desc "Edit doom config.org" "d" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
-         :desc "Edit qtile README.org" "q" #'(lambda () (interactive) (find-file "~/.config/qtile/README.org"))
-         :desc "Edit alacritty alacritty.yml" "a" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
-         :desc "Open fish folder" "f" #'(lambda () (interactive) (find-file "~/.config/fish"))
+         :desc "Open qtile README.org" "q" #'(lambda () (interactive) (find-file "~/.config/qtile/README.org"))
+         :desc "Edit alacritty alacritty.yml" "a" #'(lambda () (interactive) (find-file "~/.config/alacritty/alacritty.yml"))
+         :desc "Open fish README.org" "f" #'(lambda () (interactive) (find-file "~/.config/fish/README.org"))
          ))
 #+end_src
 
 * Lang Specific Configs
 ** Flutter
+
+Flutter setup with major mode keybinds
 #+begin_src elisp
 (use-package lsp-dart
   :init

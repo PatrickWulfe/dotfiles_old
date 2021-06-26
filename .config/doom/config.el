@@ -30,9 +30,9 @@
 (map! :leader
         (:prefix ("f ." . "open dotfile")
          :desc "Edit doom config.org" "d" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
-         :desc "Edit qtile README.org" "q" #'(lambda () (interactive) (find-file "~/.config/qtile/README.org"))
-         :desc "Edit alacritty alacritty.yml" "a" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
-         :desc "Open fish folder" "f" #'(lambda () (interactive) (find-file "~/.config/fish"))
+         :desc "Open qtile README.org" "q" #'(lambda () (interactive) (find-file "~/.config/qtile/README.org"))
+         :desc "Edit alacritty alacritty.yml" "a" #'(lambda () (interactive) (find-file "~/.config/alacritty/alacritty.yml"))
+         :desc "Open fish README.org" "f" #'(lambda () (interactive) (find-file "~/.config/fish/README.org"))
          ))
 
 (use-package lsp-dart
