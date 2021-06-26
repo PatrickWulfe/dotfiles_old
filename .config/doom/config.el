@@ -19,8 +19,10 @@
 
 (setq org-directory "~/org/")
 
+(setq projectile-project-search-path '("~/dev/src/"))
+
 (map! :leader
-      (:desc "Go to test/implimentation file" "f t" #'projectile-toggle-between-implimentation-and-test))
+      (:desc "Go to test/implimentation file" "p ," #'projectile-toggle-between-implimentation-and-test))
 
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
@@ -33,8 +35,19 @@
          :desc "Open fish folder" "f" #'(lambda () (interactive) (find-file "~/.config/fish"))
          ))
 
-(use-package lsp-mode :ensure t)
 (use-package lsp-dart
-  :ensure t
-  :hook (dart-mode . lsp))
-(use-package hover :ensure t)
+  :init
+  (map! :map dart-mode-map
+        (:localleader
+        (:prefix ("p" . "pub")
+         "g" #'lsp-dart-pub-get ))))
+(with-eval-after-load 'projectile
+  (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
+  (add-to-list 'projectile-project-root-files-bottom-up "BUILD"))
+;; (use-package dart-mode
+;;   :hook (dart-mode . (lambda ()
+;;                        (add-hook 'after-save-hook #'flutter-run-or-hot-reload nil t))))
+(use-package flutter-l10n-flycheck
+  :after flutter
+  :config
+  (flutter-l10n-flycheck-setup))

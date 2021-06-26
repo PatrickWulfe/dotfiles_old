@@ -49,5 +49,8 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
-(package! lsp-dart)
+(package! flutter)
+(package! flutter-l10n-flycheck)
 (package! hover)
+(package! lsp-dart)
+(package! ob-dart)

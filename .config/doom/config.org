@@ -50,6 +50,11 @@
 (setq org-directory "~/org/")
 #+end_src
 
+* Package Settings
+** Projectile
+#+begin_src elisp
+(setq projectile-project-search-path '("~/dev/src/"))
+#+end_src
 * TODO Keybinds
 - Add error next/prev stuff
 - Add jump to test file
@@ -74,7 +79,7 @@
 ** Projectile
 #+begin_src elisp
 (map! :leader
-      (:desc "Go to test/implimentation file" "f t" #'projectile-toggle-between-implimentation-and-test))
+      (:desc "Go to test/implimentation file" "p ," #'projectile-toggle-between-implimentation-and-test))
 #+end_src
 
 ** Babel
@@ -97,9 +102,20 @@
 * Lang Specific Configs
 ** Flutter
 #+begin_src elisp
-(use-package lsp-mode :ensure t)
 (use-package lsp-dart
-  :ensure t
-  :hook (dart-mode . lsp))
-(use-package hover :ensure t)
+  :init
+  (map! :map dart-mode-map
+        (:localleader
+        (:prefix ("p" . "pub")
+         "g" #'lsp-dart-pub-get ))))
+(with-eval-after-load 'projectile
+  (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
+  (add-to-list 'projectile-project-root-files-bottom-up "BUILD"))
+;; (use-package dart-mode
+;;   :hook (dart-mode . (lambda ()
+;;                        (add-hook 'after-save-hook #'flutter-run-or-hot-reload nil t))))
+(use-package flutter-l10n-flycheck
+  :after flutter
+  :config
+  (flutter-l10n-flycheck-setup))
 #+end_src
