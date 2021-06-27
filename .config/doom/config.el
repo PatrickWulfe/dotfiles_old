@@ -25,7 +25,11 @@
 (setq projectile-project-search-path '("~/dev/src/"))
 
 (map! :leader
-      :desc "Go to test/implimentation file" "p ,"
+      :desc "Open vterm" "v"
+      #'vterm)
+
+(map! :leader
+      :desc "Go to test/implimentation file" "p j"
       #'projectile-toggle-between-implementation-and-test)
 
 (map! :leader
@@ -48,6 +52,9 @@
         (:localleader
         (:prefix ("p" . "pub")
          "g" #'lsp-dart-pub-get ))))
+
+(setq lsp-dart-main-code-lens nil
+      lsp-dart-test-code-lens nil)
 
 (with-eval-after-load 'projectile
   (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")

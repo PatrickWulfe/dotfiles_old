@@ -61,10 +61,16 @@
 (setq projectile-project-search-path '("~/dev/src/"))
 #+end_src
 * TODO Keybinds
+** Terminal
+#+begin_src elisp
+(map! :leader
+      :desc "Open vterm" "v"
+      #'vterm)
+#+end_src
 ** Projectile
 #+begin_src elisp
 (map! :leader
-      :desc "Go to test/implimentation file" "p ,"
+      :desc "Go to test/implimentation file" "p j"
       #'projectile-toggle-between-implementation-and-test)
 #+end_src
 
@@ -101,6 +107,13 @@ Just wanted to be able to turn tabs on/off
         (:localleader
         (:prefix ("p" . "pub")
          "g" #'lsp-dart-pub-get ))))
+#+end_src
+
+*** Disable Run/Debug Code Lens
+I have keybinds for these, and the goal is to never use the mouse, so I'll never click on these anyway, so they're just clutter
+#+begin_src elisp
+(setq lsp-dart-main-code-lens nil
+      lsp-dart-test-code-lens nil)
 #+end_src
 
 *** Projectile
