@@ -10,6 +10,9 @@
 
 (setq display-line-numbers-type 'relative)
 
+(setq centaur-tabs-height 32
+      centaur-tabs-style "wave")
+
 (setq scroll-margin 10)
 
 (setq confirm-kill-emacs nil)
@@ -22,7 +25,11 @@
 (setq projectile-project-search-path '("~/dev/src/"))
 
 (map! :leader
-      (:desc "Go to test/implimentation file" "p ," #'projectile-toggle-between-implimentation-and-test))
+      :desc "Go to test/implimentation file" "p ,"
+      #'projectile-toggle-between-implementation-and-test)
+
+(map! :leader
+      :desc "Tabs" "t T" #'centaur-tabs-mode)
 
 (map! :leader
       :desc "Org babel tangle" "m B" #'org-babel-tangle)
@@ -41,12 +48,17 @@
         (:localleader
         (:prefix ("p" . "pub")
          "g" #'lsp-dart-pub-get ))))
+
 (with-eval-after-load 'projectile
   (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
   (add-to-list 'projectile-project-root-files-bottom-up "BUILD"))
-;; (use-package dart-mode
-;;   :hook (dart-mode . (lambda ()
-;;                        (add-hook 'after-save-hook #'flutter-run-or-hot-reload nil t))))
+(projectile-register-project-type 'flutter '("pubspec.yaml")
+                                  :project-file "pubspec.yaml"
+                                  :src-dir "lib/"
+                                  :test "flutter test"
+                                  :test-dir "test/"
+                                  :test-suffix "_test")
+
 (use-package flutter-l10n-flycheck
   :after flutter
   :config

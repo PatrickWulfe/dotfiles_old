@@ -28,6 +28,11 @@
 (setq display-line-numbers-type 'relative)
 #+end_src
 
+** Tabs
+#+begin_src elisp
+(setq centaur-tabs-height 32
+      centaur-tabs-style "wave")
+#+end_src
 ** Scroll margin
 #+begin_src elisp
 (setq scroll-margin 10)
@@ -56,31 +61,19 @@
 (setq projectile-project-search-path '("~/dev/src/"))
 #+end_src
 * TODO Keybinds
-- Add error next/prev stuff
-- Add jump to test file
-- Add binds for dotfiles
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
 ** Projectile
 #+begin_src elisp
 (map! :leader
-      (:desc "Go to test/implimentation file" "p ," #'projectile-toggle-between-implimentation-and-test))
+      :desc "Go to test/implimentation file" "p ,"
+      #'projectile-toggle-between-implementation-and-test)
 #+end_src
 
+** Tabs
+Just wanted to be able to turn tabs on/off
+#+begin_src elisp
+(map! :leader
+      :desc "Tabs" "t T" #'centaur-tabs-mode)
+#+end_src
 ** Babel
 #+begin_src elisp
 (map! :leader
@@ -100,8 +93,7 @@
 
 * Lang Specific Configs
 ** Flutter
-
-Flutter setup with major mode keybinds
+*** Flutter setup with major mode keybinds
 #+begin_src elisp
 (use-package lsp-dart
   :init
@@ -109,12 +101,23 @@ Flutter setup with major mode keybinds
         (:localleader
         (:prefix ("p" . "pub")
          "g" #'lsp-dart-pub-get ))))
+#+end_src
+
+*** Projectile
+#+begin_src elisp
 (with-eval-after-load 'projectile
   (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
   (add-to-list 'projectile-project-root-files-bottom-up "BUILD"))
-;; (use-package dart-mode
-;;   :hook (dart-mode . (lambda ()
-;;                        (add-hook 'after-save-hook #'flutter-run-or-hot-reload nil t))))
+(projectile-register-project-type 'flutter '("pubspec.yaml")
+                                  :project-file "pubspec.yaml"
+                                  :src-dir "lib/"
+                                  :test "flutter test"
+                                  :test-dir "test/"
+                                  :test-suffix "_test")
+#+end_src
+
+*** Flycheck
+#+begin_src elisp
 (use-package flutter-l10n-flycheck
   :after flutter
   :config
