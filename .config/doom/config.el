@@ -17,16 +17,35 @@
 
 (setq confirm-kill-emacs nil)
 
+(setq undo-limit 80000000
+      evil-want-fine-undo t)
+
 (setq auto-save-default t
       make-backup-files t)
 
 (setq org-directory "~/org/")
 
+(when (and (featurep! :tools lsp) (not (featurep! :tools lsp +eglot)))
+  (use-package! lsp-mode :defer t :config
+    (add-hook! lsp-after-open
+      (setq company-backends '((:separate company-yasnippet company-capf) company-yasnippet)))))
+
+(setq evil-snipe-scope 'visible
+      evil-snipe-spillover-scope 'buffer)
+
 (setq projectile-project-search-path '("~/dev/src/"))
 
 (map! :leader
-      :desc "Open vterm" "v"
-      #'vterm)
+      :desc "M-x" "SPC" #'execute-extended-command
+      :desc "Find file in project" ":" #'projectile-find-file)
+
+(setq doom-leader-key "SPC"
+      doom-localleader-key ",")
+
+(map! :leader
+      :desc "Comment operator" ";" #'evilnc-comment-operator
+      :desc "Open vterm" "v" #'vterm
+      :desc "Open snippets" "y" #'yas-insert-snippet)
 
 (map! :leader
       :desc "Go to test/implimentation file" "p j"
@@ -56,6 +75,11 @@
 (setq lsp-dart-main-code-lens nil
       lsp-dart-test-code-lens nil)
 
+(use-package flutter-l10n-flycheck
+  :after flutter
+  :config
+  (flutter-l10n-flycheck-setup))
+
 (with-eval-after-load 'projectile
   (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
   (add-to-list 'projectile-project-root-files-bottom-up "BUILD"))
@@ -65,8 +89,3 @@
                                   :test "flutter test"
                                   :test-dir "test/"
                                   :test-suffix "_test")
-
-(use-package flutter-l10n-flycheck
-  :after flutter
-  :config
-  (flutter-l10n-flycheck-setup))

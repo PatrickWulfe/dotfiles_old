@@ -63,7 +63,7 @@ super + e
     emacs
 
 #Browser
-super + w
+super + b
     google-chrome-stable
 
 #Conky-toggle

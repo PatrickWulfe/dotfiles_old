@@ -44,6 +44,13 @@
 #+end_src
 
 * General Config
+** Make undo better
+Increase the limit and give more fine tuned control on undo
+#+begin_src elisp
+(setq undo-limit 80000000
+      evil-want-fine-undo t)
+#+end_src
+
 ** Enable auto-save and backup files
 #+begin_src elisp
 (setq auto-save-default t
@@ -56,16 +63,44 @@
 #+end_src
 
 * Package Settings
+** Company
+Put snippets above LSP
+#+begin_src elisp
+(when (and (featurep! :tools lsp) (not (featurep! :tools lsp +eglot)))
+  (use-package! lsp-mode :defer t :config
+    (add-hook! lsp-after-open
+      (setq company-backends '((:separate company-yasnippet company-capf) company-yasnippet)))))
+#+end_src
+
+** Evil-Snipe
+#+begin_src elisp
+(setq evil-snipe-scope 'visible
+      evil-snipe-spillover-scope 'buffer)
+#+end_src
 ** Projectile
 #+begin_src elisp
 (setq projectile-project-search-path '("~/dev/src/"))
 #+end_src
-* TODO Keybinds
-** Terminal
+
+* Keybinds
+** General
+*** Switch execute command and dired jump
 #+begin_src elisp
 (map! :leader
-      :desc "Open vterm" "v"
-      #'vterm)
+      :desc "M-x" "SPC" #'execute-extended-command
+      :desc "Find file in project" ":" #'projectile-find-file)
+#+end_src
+*** Set ',' as localleadder
+#+begin_src elisp
+(setq doom-leader-key "SPC"
+      doom-localleader-key ",")
+#+end_src
+*** Leader general commands
+#+begin_src elisp
+(map! :leader
+      :desc "Comment operator" ";" #'evilnc-comment-operator
+      :desc "Open vterm" "v" #'vterm
+      :desc "Open snippets" "y" #'yas-insert-snippet)
 #+end_src
 ** Projectile
 #+begin_src elisp
@@ -116,6 +151,13 @@ I have keybinds for these, and the goal is to never use the mouse, so I'll never
       lsp-dart-test-code-lens nil)
 #+end_src
 
+*** Flycheck
+#+begin_src elisp
+(use-package flutter-l10n-flycheck
+  :after flutter
+  :config
+  (flutter-l10n-flycheck-setup))
+#+end_src
 *** Projectile
 #+begin_src elisp
 (with-eval-after-load 'projectile
@@ -127,12 +169,4 @@ I have keybinds for these, and the goal is to never use the mouse, so I'll never
                                   :test "flutter test"
                                   :test-dir "test/"
                                   :test-suffix "_test")
-#+end_src
-
-*** Flycheck
-#+begin_src elisp
-(use-package flutter-l10n-flycheck
-  :after flutter
-  :config
-  (flutter-l10n-flycheck-setup))
 #+end_src

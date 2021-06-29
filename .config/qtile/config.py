@@ -548,10 +548,6 @@ def start_once():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/scripts/autostart.sh'])
 
-@hook.subscribe.startup_complete
-def start_comp():
-    lazy.restart()
-
 #@hook.subscribe.startup
 #def start_always():
     # Set the cursor to something sane in X
@@ -594,7 +590,7 @@ floating_layout = layout.Floating(float_rules=[
     {'wname': 'pinentry'},
     {'wmclass': 'ssh-askpass'},
 
-],  fullscreen_border_width = 0, border_width = 0)
+],  fullscreen_border_width = 2, border_width = 2)
 auto_fullscreen = True
 
 focus_on_window_activation = "focus" # or smart

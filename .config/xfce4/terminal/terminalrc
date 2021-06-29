@@ -1,10 +1,10 @@
 [Configuration]
 BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
-BackgroundDarkness=0.600000
+BackgroundDarkness=0.900000
 ColorPalette=rgb(28,30,38);rgb(233,67,111);rgb(39,215,150);rgb(250,183,149);rgb(37,178,188);rgb(184,119,219);rgb(33,191,194);rgb(253,240,237);rgb(85,87,83);rgb(233,67,111);rgb(9,247,160);rgb(250,183,149);rgb(37,178,188);rgb(184,119,219);rgb(33,191,194);rgb(238,238,236)
 DropdownStatusIcon=FALSE
-DropdownWidth=56
-DropdownHeight=53
+DropdownWidth=48
+DropdownHeight=52
 DropdownAlwaysShowTabs=FALSE
 FontName=FiraCode Nerd Font weight=450 12
 MiscAlwaysShowTabs=FALSE

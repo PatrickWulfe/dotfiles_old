@@ -70,7 +70,7 @@
    (hor-highlight-brighter (doom-lighten base3 0.5))
 
    ;; face categories -- required for all themes
-   (highlight      red)
+   (highlight      yellow)
    (vertical-bar   base0)
    (selection      violet)
    (builtin        violet)
