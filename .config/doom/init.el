@@ -20,10 +20,11 @@
        ;;layout                 ; auie,ctsrnm is the superior home row
 
        :completion
-       (company -childframe -tng)    ; the ultimate code completion backend
+       (company +childframe)    ; the ultimate code completion backend
        ;;helm                   ; the *other* search engine for love and life
        ;;ido                    ; the other *other* search engine...
-       (ivy +icons -childframe) ; a search engine for love and life
+       (ivy +icons +fuzzy
+            -childframe) ; a search engine for love and life
 
        :ui
        ;;deft                   ; notational velocity for Emacs
@@ -119,7 +120,8 @@
        ;;crystal                ; ruby at the speed of c
        (csharp +lsp +unity)     ; unity, .NET, and mono shenanigans
        ;;data                   ; config/data formats
-       (dart +flutter +lsp)     ; paint ui and not much else
+       (dart +flutter +lsp
+                +hover)         ; paint ui and not much else
        ;;elixir                 ; erlang done right
        ;;elm                    ; care for a cup of TEA?
        emacs-lisp               ; drown in parentheses

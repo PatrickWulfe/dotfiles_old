@@ -17,8 +17,7 @@ alias vim emacs
 alias nvim emacs
 alias vi emacs
 
-alias efshc "$EDITOR $HOME/.config/fish/config.fish"
-alias efsha "$EDITOR $IMPORT_LOC/aliases.fish"
+alias efshc "$EDITOR $HOME/.config/fish/README.org"
 
 alias envmc "$EDITOR $HOME/.config/nvim/init.vim"
 
@@ -31,6 +30,8 @@ alias cdfi "cd $IMPORT_LOC"
 alias dfg "/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 
 alias uwu "sudo apt update && sudo apt upgrade"
-alias e. "nautilus ."
-alias c. "emacs ."
+abbr e "emacs"
+abbr v "emacs"
+abbr g "git"
+abbr n "naultilus"
 alias doom "~/.emacs.d/bin/doom"

@@ -43,10 +43,10 @@ blueberry-tray &
 picom --config $HOME/.config/qtile/scripts/picom.conf &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
-ckb-next -b &
 #sudo nice -n -20 udevmon -c udevmon.yaml >udevmon.log 2>udevmon.err &
 #caps2esc &
 xcape -e 'Control_L=Escape' &
+# xcape -e 'Shift_L=Tab' &
 guake &
 mpd &
 

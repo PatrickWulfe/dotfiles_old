@@ -90,9 +90,9 @@ super + t
 super + v
     pavucontrol
 
-#Pragha
+#Thunderbird
 super + m
-    pragha
+    thunderbird
 
 #alacritty
 super + Return
@@ -121,8 +121,8 @@ super + shift + Return
 #	thunar
 
 #dmenu
-super + shift + d
-	dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
+super + d
+	dmenu_run -i -nb '#1C1E26' -nf '#09F7A0' -sb '#09F7A0' -sf '#1C1E26' -fn 'NotoMonoRegular:bold:pixelsize=14'
 
 #reload sxhkd:
 super + shift + s

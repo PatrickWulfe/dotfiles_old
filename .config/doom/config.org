@@ -63,15 +63,6 @@ Increase the limit and give more fine tuned control on undo
 #+end_src
 
 * Package Settings
-** Company
-Put snippets above LSP
-#+begin_src elisp
-(when (and (featurep! :tools lsp) (not (featurep! :tools lsp +eglot)))
-  (use-package! lsp-mode :defer t :config
-    (add-hook! lsp-after-open
-      (setq company-backends '((:separate company-yasnippet company-capf) company-yasnippet)))))
-#+end_src
-
 ** Evil-Snipe
 #+begin_src elisp
 (setq evil-snipe-scope 'visible
@@ -82,6 +73,12 @@ Put snippets above LSP
 (setq projectile-project-search-path '("~/dev/src/"))
 #+end_src
 
+** Yasnippets
+#+begin_src elisp
+(use-package doom-snippets
+  :load-path "~/.config/doom/snippets"
+  :after yasnippet)
+#+end_src
 * Keybinds
 ** General
 *** Switch execute command and dired jump
@@ -99,8 +96,7 @@ Put snippets above LSP
 #+begin_src elisp
 (map! :leader
       :desc "Comment operator" ";" #'evilnc-comment-operator
-      :desc "Open vterm" "v" #'vterm
-      :desc "Open snippets" "y" #'yas-insert-snippet)
+      :desc "Open vterm" "v" #'vterm)
 #+end_src
 ** Projectile
 #+begin_src elisp
@@ -109,6 +105,16 @@ Put snippets above LSP
       #'projectile-toggle-between-implementation-and-test)
 #+end_src
 
+** Yasnippet
+Adding some utility binds
+#+begin_src elisp
+(map! :leader
+      (:prefix ("y" . "snippets")
+       :desc "Insert" "i" #'yas-insert-snippet
+       :desc "New" "n" #'yas-new-snippet
+       :desc "Tryout" "t" #'yas-tryout-snippet
+      ))
+#+end_src
 ** Tabs
 Just wanted to be able to turn tabs on/off
 #+begin_src elisp

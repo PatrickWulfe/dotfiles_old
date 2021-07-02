@@ -25,15 +25,14 @@
 
 (setq org-directory "~/org/")
 
-(when (and (featurep! :tools lsp) (not (featurep! :tools lsp +eglot)))
-  (use-package! lsp-mode :defer t :config
-    (add-hook! lsp-after-open
-      (setq company-backends '((:separate company-yasnippet company-capf) company-yasnippet)))))
-
 (setq evil-snipe-scope 'visible
       evil-snipe-spillover-scope 'buffer)
 
 (setq projectile-project-search-path '("~/dev/src/"))
+
+(use-package doom-snippets
+  :load-path "~/.config/doom/snippets"
+  :after yasnippet)
 
 (map! :leader
       :desc "M-x" "SPC" #'execute-extended-command
@@ -44,12 +43,18 @@
 
 (map! :leader
       :desc "Comment operator" ";" #'evilnc-comment-operator
-      :desc "Open vterm" "v" #'vterm
-      :desc "Open snippets" "y" #'yas-insert-snippet)
+      :desc "Open vterm" "v" #'vterm)
 
 (map! :leader
       :desc "Go to test/implimentation file" "p j"
       #'projectile-toggle-between-implementation-and-test)
+
+(map! :leader
+      (:prefix ("y" . "snippets")
+       :desc "Insert" "i" #'yas-insert-snippet
+       :desc "New" "n" #'yas-new-snippet
+       :desc "Tryout" "t" #'yas-tryout-snippet
+      ))
 
 (map! :leader
       :desc "Tabs" "t T" #'centaur-tabs-mode)
