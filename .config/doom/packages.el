@@ -49,8 +49,12 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+(package! command-log-mode)
+(package! evil-motion-trainer
+  :recipe (:host github :repo "martinbaillie/evil-motion-trainer"))
 (package! flutter)
 (package! flutter-l10n-flycheck)
-(package! hover)
-(package! lsp-dart)
+(package! nyan-mode)
 (package! ob-dart)
+(package! sublimity)
+(package! treemacs-all-the-icons)

@@ -212,13 +212,13 @@ for i in groups:
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name) , lazy.group[i.name].toscreen()),
     ])
 
-border_width = 2
-
 ############################################################
 # => LAYOUTS
 ############################################################
+border_width = 2
+margin = 16
 def init_layout_theme():
-    return {"margin":5,
+    return {"margin":margin,
             "border_width": border_width,
             "border_focus": color3,
             "border_normal": color8
@@ -228,9 +228,9 @@ layout_theme = init_layout_theme()
 
 
 layouts = [
-    layout.Columns(margin = 8, border_width=border_width, border_focus=color3, border_normal=color8),
-    layout.MonadTall(margin=8, border_width=border_width, border_focus=color3, border_normal=color8),
-    layout.MonadWide(margin=8, border_width=border_width, border_focus=color3, border_normal=color8),
+    layout.Columns(margin=margin, border_width=border_width, border_focus=color3, border_normal=color8),
+    layout.MonadTall(margin=margin, border_width=border_width, border_focus=color3, border_normal=color8),
+    layout.MonadWide(margin=margin, border_width=border_width, border_focus=color3, border_normal=color8),
     layout.Matrix(**layout_theme),
     layout.Bsp(**layout_theme),
     layout.Floating(**layout_theme),
@@ -479,8 +479,8 @@ widgets_screen2 = init_widgets_screen2()
 
 
 def init_screens():
-    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=20, opacity=0.95, margin=8)),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=20, opacity=0.95, margin=8))]
+    return [Screen(left=bar.Gap(margin), right=bar.Gap(margin), bottom=bar.Gap(margin), top=bar.Bar(widgets=init_widgets_screen1(), size=20, opacity=0.95)),
+            Screen(left=bar.Gap(margin), right=bar.Gap(margin), bottom=bar.Gap(margin), top=bar.Bar(widgets=init_widgets_screen1(), size=20, opacity=0.95))]
 screens = init_screens()
 
 ############################################################

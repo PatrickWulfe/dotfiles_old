@@ -23,9 +23,56 @@
 (setq doom-theme 'my-doom-horizon)
 #+end_src
 
+** Nyan-Mode
+#+begin_src elisp
+(use-package! nyan-mode
+  :after doom-modeline
+  :init
+  (setq nyan-bar-length 20)
+   (nyan-mode)
+  )
+#+end_src
+
+** Rainbow Delimiters
+#+begin_src elisp
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+#+end_src
+
 ** Line Numbers
 #+begin_src elisp
 (setq display-line-numbers-type 'relative)
+#+end_src
+
+** Scroll margin
+https://github.com/martinbaillie/dotfiles/blob/master/config/emacs/config.org
+#+begin_src elisp
+(setq
+ scroll-conservatively 10
+ scroll-step 1
+ scroll-margin 10)
+(add-hook 'term-mode-hook (λ! (setq-local scroll-margin 0)))
+(add-hook 'vterm-mode-hook (λ! (setq-local scroll-margin 0)))
+(add-hook 'ivy-mode-hook (λ! (setq-local scroll-margin 0)))
+#+end_src
+
+** Remove Scrollbars
+#+begin_src elisp
+(scroll-bar-mode -1)
+#+end_src
+
+** Modeline
+#+begin_src elisp
+(after! doom-modeline
+  (doom-modeline-def-modeline 'main
+    '(bar window-number modals workspace-name buffer-info word-count
+    remote-host parrot buffer-position selection-info)
+  '(objed-state persp-name grip irc mu4e gnus debug repl lsp minor-modes
+                input-method indent-info buffer-encoding major-mode
+                process vcs checker matches)))
+#+end_src
+** Disable exit prompt
+#+begin_src elisp
+(setq confirm-kill-emacs nil)
 #+end_src
 
 ** Tabs
@@ -33,17 +80,16 @@
 (setq centaur-tabs-height 32
       centaur-tabs-style "wave")
 #+end_src
-** Scroll margin
-#+begin_src elisp
-(setq scroll-margin 10)
-#+end_src
-
-** Disable exit prompt
-#+begin_src elisp
-(setq confirm-kill-emacs nil)
-#+end_src
 
 * General Config
+** Linux Specifics
+#+begin_src elisp
+(when IS-LINUX
+  (set-frame-parameter (selected-frame) 'alpha '(99 . 99))
+  (add-to-list 'default-frame-alist '(alpha . (99 . 99)))
+  (add-to-list 'default-frame-alist '(inhibit-double-buffering . t)))
+#+end_src
+
 ** Make undo better
 Increase the limit and give more fine tuned control on undo
 #+begin_src elisp
@@ -63,14 +109,43 @@ Increase the limit and give more fine tuned control on undo
 #+end_src
 
 * Package Settings
+** Evil-Motion-Trainer
+#+begin_src elisp
+(use-package! evil-motion-trainer
+  :init
+  (global-evil-motion-trainer-mode 1)
+  :config
+  (setq evil-motion-trainer-threshold 3))
+;; (setq evil-motion-trainer-super-annoying-mode t)
+(map!
+ :leader
+ (:prefix-map ("t" . "toggle")
+  :desc "Evil motion trainer" "t" #'evil-motion-trainer-mode))
+#+end_src
+
 ** Evil-Snipe
 #+begin_src elisp
 (setq evil-snipe-scope 'visible
       evil-snipe-spillover-scope 'buffer)
 #+end_src
+
 ** Projectile
 #+begin_src elisp
 (setq projectile-project-search-path '("~/dev/src/"))
+#+end_src
+
+** Sublimity
+#+begin_src elisp
+(require 'sublimity)
+(require 'sublimity-scroll)
+;; (sublimity-mode 1)
+(setq sublimity-scroll-weight 100
+      sublimity-scroll-drift-length 100)
+#+end_src
+
+** Treemacs
+#+begin_src elisp
+(setq doom-themes-treemacs-theme "doom-colors")
 #+end_src
 
 ** Yasnippets
@@ -87,22 +162,37 @@ Increase the limit and give more fine tuned control on undo
       :desc "M-x" "SPC" #'execute-extended-command
       :desc "Find file in project" ":" #'projectile-find-file)
 #+end_src
+
 *** Set ',' as localleadder
 #+begin_src elisp
 (setq doom-leader-key "SPC"
       doom-localleader-key ",")
 #+end_src
+
 *** Leader general commands
 #+begin_src elisp
 (map! :leader
       :desc "Comment operator" ";" #'evilnc-comment-operator
       :desc "Open vterm" "v" #'vterm)
 #+end_src
+
+** Evil-Easymotion
+#+begin_src elisp
+(map! (:after evil-easymotion :leader "j" evilem-map))
+(map! :leader :prefix ("j" . "jump"))
+#+end_src
+
 ** Projectile
 #+begin_src elisp
 (map! :leader
       :desc "Go to test/implimentation file" "p j"
       #'projectile-toggle-between-implementation-and-test)
+#+end_src
+
+** Sublimity
+#+begin_src elisp
+(map! :leader
+      :desc "Sublimity" "t S" #'sublimity-mode)
 #+end_src
 
 ** Yasnippet
@@ -115,12 +205,14 @@ Adding some utility binds
        :desc "Tryout" "t" #'yas-tryout-snippet
       ))
 #+end_src
+
 ** Tabs
 Just wanted to be able to turn tabs on/off
 #+begin_src elisp
 (map! :leader
       :desc "Tabs" "t T" #'centaur-tabs-mode)
 #+end_src
+
 ** Babel
 #+begin_src elisp
 (map! :leader
@@ -144,10 +236,15 @@ Just wanted to be able to turn tabs on/off
 #+begin_src elisp
 (use-package lsp-dart
   :init
+  (setq lsp-dart-flutter-sdk-dir "~/dev/sdks/flutter")
   (map! :map dart-mode-map
         (:localleader
         (:prefix ("p" . "pub")
          "g" #'lsp-dart-pub-get ))))
+(use-package flutter
+  :after dart-mode
+  :custom
+  (flutter-sdk-path "~/dev/sdks/flutter"))
 #+end_src
 
 *** Disable Run/Debug Code Lens
