@@ -101,8 +101,7 @@
       doom-localleader-key ",")
 
 (map! :leader
-      :desc "Comment operator" ";" #'evilnc-comment-operator
-      :desc "Open vterm" "v" #'vterm)
+      :desc "Comment operator" ";" #'evilnc-comment-operator)
 
 (after! org (map! :localleader
                   :map org-mode-map

@@ -217,11 +217,9 @@ I use this often enough that it's worth mapping the localleader away from "SPC m
 
 *** Leader general commands
 I prefer having the comment operator bound like in Spacemacs over "g c"
-Also wanted a bind to launch vterm
 #+begin_src elisp
 (map! :leader
-      :desc "Comment operator" ";" #'evilnc-comment-operator
-      :desc "Open vterm" "v" #'vterm)
+      :desc "Comment operator" ";" #'evilnc-comment-operator)
 #+end_src
 
 ** Org-mode
