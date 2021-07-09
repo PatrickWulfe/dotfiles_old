@@ -2,8 +2,9 @@
       user-mail-address "wulfep@gmail.com")
 
 (setq doom-font (font-spec :family "Fira Code" :size 16 :weight 'medium)
-      doom-variable-pitch-font (font-spec :family "Noto Sans" :size 13)
-      doom-big-font (font-spec :family "Literation Sans")
+      doom-variable-pitch-font (font-spec :family "Open Sans" :size 13)
+      doom-big-font (font-spec :family "Open Sans")
+      doom-serif-font (font-spec :family "Fira Code" :weigth 'light)
       )
 
 (setq doom-theme 'my-doom-horizon)
@@ -50,38 +51,47 @@
 (setq undo-limit 80000000
       evil-want-fine-undo t)
 
-(setq auto-save-default t
-      make-backup-files t)
+;; (setq auto-save-default t
+;;       make-backup-files t)
 
 (setq org-directory "~/org/")
 
-(use-package! evil-motion-trainer
-  :init
-  (global-evil-motion-trainer-mode 1)
-  :config
-  (setq evil-motion-trainer-threshold 3))
-;; (setq evil-motion-trainer-super-annoying-mode t)
-(map!
- :leader
- (:prefix-map ("t" . "toggle")
-  :desc "Evil motion trainer" "t" #'evil-motion-trainer-mode))
+;; (use-package! evil-motion-trainer
+;;   :init
+;;   (global-evil-motion-trainer-mode 1)
+;;   :config
+;;   (setq evil-motion-trainer-threshold 3))
+;; ;; (setq evil-motion-trainer-super-annoying-mode t)
+;; (map!
+;;  :leader
+;;  (:prefix-map ("t" . "toggle")
+  ;; :desc "Evil motion trainer" "t" #'evil-motion-trainer-mode))
 
 (setq evil-snipe-scope 'visible
       evil-snipe-spillover-scope 'buffer)
 
-(setq projectile-project-search-path '("~/dev/src/"))
+(use-package mixed-pitch
+  :hook
+  (text-mode . mixed-pitch-mode))
 
-(require 'sublimity)
-(require 'sublimity-scroll)
-;; (sublimity-mode 1)
-(setq sublimity-scroll-weight 100
-      sublimity-scroll-drift-length 100)
+(setq projectile-project-search-path '("~/dev/src/"))
 
 (setq doom-themes-treemacs-theme "doom-colors")
 
 (use-package doom-snippets
   :load-path "~/.config/doom/snippets"
   :after yasnippet)
+
+(map! :leader
+        (:prefix ("f ." . "open dotfile")
+         :desc "Edit doom config.org" "d" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
+         :desc "Open qtile README.org" "q" #'(lambda () (interactive) (find-file "~/.config/qtile/README.org"))
+         :desc "Edit alacritty alacritty.yml" "a" #'(lambda () (interactive) (find-file "~/.config/alacritty/alacritty.yml"))
+         :desc "Open fish README.org" "f" #'(lambda () (interactive) (find-file "~/.config/fish/README.org"))
+         ))
+
+(map! (:after evil-easymotion :leader "j" evilem-map))
+(map! :leader :prefix ("j" . "jump"))
 
 (map! :leader
       :desc "M-x" "SPC" #'execute-extended-command
@@ -94,15 +104,17 @@
       :desc "Comment operator" ";" #'evilnc-comment-operator
       :desc "Open vterm" "v" #'vterm)
 
-(map! (:after evil-easymotion :leader "j" evilem-map))
-(map! :leader :prefix ("j" . "jump"))
+(after! org (map! :localleader
+                  :map org-mode-map
+                  :desc "Org babel tangle" "B" #'org-babel-tangle))
 
+Add bind to go back and forth between test and implimentation files, useful for TDD and BDD
 (map! :leader
       :desc "Go to test/implimentation file" "p j"
       #'projectile-toggle-between-implementation-and-test)
 
 (map! :leader
-      :desc "Sublimity" "t S" #'sublimity-mode)
+      :desc "Tabs" "t T" #'centaur-tabs-mode)
 
 (map! :leader
       (:prefix ("y" . "snippets")
@@ -110,20 +122,6 @@
        :desc "New" "n" #'yas-new-snippet
        :desc "Tryout" "t" #'yas-tryout-snippet
       ))
-
-(map! :leader
-      :desc "Tabs" "t T" #'centaur-tabs-mode)
-
-(map! :leader
-      :desc "Org babel tangle" "m B" #'org-babel-tangle)
-
-(map! :leader
-        (:prefix ("f ." . "open dotfile")
-         :desc "Edit doom config.org" "d" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
-         :desc "Open qtile README.org" "q" #'(lambda () (interactive) (find-file "~/.config/qtile/README.org"))
-         :desc "Edit alacritty alacritty.yml" "a" #'(lambda () (interactive) (find-file "~/.config/alacritty/alacritty.yml"))
-         :desc "Open fish README.org" "f" #'(lambda () (interactive) (find-file "~/.config/fish/README.org"))
-         ))
 
 (use-package lsp-dart
   :init

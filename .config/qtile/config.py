@@ -1,6 +1,3 @@
-############################################################
-## => IMPORTS
-############################################################
 import os
 import re
 import socket
@@ -12,13 +9,6 @@ from libqtile.widget import Spacer
 from random import randint
 #import arcobattery
 
-############################################################
-## => INIT
-############################################################
-
-############################################################
-# => COLORS
-############################################################
 # black dark/light
 color0 =                          "#1C1E26"
 color8 =                          "#6C6F93"
@@ -51,9 +41,6 @@ color14 =                         "#21BFC2"
 color7 =                          "#FDF0ED"
 color15 =                         "#f8f8f8"
 
-############################################################
-## => KEYBINDS
-############################################################
 #mod4 or mod = super key
 mod                     = "mod4"
 mod1                    = "alt"
@@ -170,23 +157,17 @@ keys = [
 
     ]
 
-############################################################
-## => GROUPS
-############################################################
 groups = []
 
 # FOR QWERTY KEYBOARDS
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
 
-# FOR AZERTY KEYBOARDS
-#group_names = ["ampersand", "eacute", "quotedbl", "apostrophe", "parenleft", "section", "egrave", "exclam", "ccedilla", "agrave",]
-
-#group_labels = ["1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "0",]
+# group_labels = ["1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "0",]
 group_labels = ["", "", "", "", "", "", "", "", "", "",]
-#group_labels = ["Web", "Edit/chat", "Image", "Gimp", "Meld", "Video", "Vb", "Files", "Mail", "Music",]
+# group_labels = ["Web", "Edit/chat", "Image", "Gimp", "Meld", "Video", "Vb", "Files", "Mail", "Music",]
 
 group_layouts = ["columns", "columns", "columns", "columns", "columns", "columns", "columns", "columns", "columns", "columns",]
-#group_layouts = ["monadtall", "matrix", "monadtall", "bsp", "monadtall", "matrix", "monadtall", "bsp", "monadtall", "monadtall",]
+# group_layouts = ["monadtall", "matrix", "monadtall", "bsp", "monadtall", "matrix", "monadtall", "bsp", "monadtall", "monadtall",]
 
 for i in range(len(group_names)):
     groups.append(
@@ -199,7 +180,7 @@ for i in range(len(group_names)):
 for i in groups:
     keys.extend([
 
-#CHANGE WORKSPACES
+# CHANGE WORKSPACES
         Key([mod], i.name, lazy.group[i.name].toscreen()),
         Key([mod], "Tab", lazy.screen.next_group()),
         Key([mod, "shift" ], "Tab", lazy.screen.prev_group()),
@@ -207,16 +188,14 @@ for i in groups:
         Key(["mod1", "shift"], "Tab", lazy.screen.prev_group()),
 
 # MOVE WINDOW TO SELECTED WORKSPACE 1-10 AND STAY ON WORKSPACE
-        #Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
+        # Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
 # MOVE WINDOW TO SELECTED WORKSPACE 1-10 AND FOLLOW MOVED WINDOW TO WORKSPACE
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name) , lazy.group[i.name].toscreen()),
     ])
 
-############################################################
-# => LAYOUTS
-############################################################
 border_width = 2
-margin = 16
+margin = 24
+col_mar = 12
 def init_layout_theme():
     return {"margin":margin,
             "border_width": border_width,
@@ -226,9 +205,8 @@ def init_layout_theme():
 
 layout_theme = init_layout_theme()
 
-
 layouts = [
-    layout.Columns(margin=margin, border_width=border_width, border_focus=color3, border_normal=color8),
+    layout.Columns(margin=col_mar, border_width=border_width, border_focus=color3, border_normal=color8),
     layout.MonadTall(margin=margin, border_width=border_width, border_focus=color3, border_normal=color8),
     layout.MonadWide(margin=margin, border_width=border_width, border_focus=color3, border_normal=color8),
     layout.Matrix(**layout_theme),
@@ -238,9 +216,6 @@ layouts = [
     layout.Max(**layout_theme)
 ]
 
-############################################################
-## => BAR
-############################################################
 # WIDGETS FOR THE BAR
 def init_widgets_defaults():
     return dict(font="Ubuntu Mono",
@@ -465,7 +440,6 @@ def init_widgets_list():
 
 widgets_list = init_widgets_list()
 
-
 def init_widgets_screen1():
     widgets_screen1 = init_widgets_list()
     return widgets_screen1
@@ -477,15 +451,22 @@ def init_widgets_screen2():
 widgets_screen1 = init_widgets_screen1()
 widgets_screen2 = init_widgets_screen2()
 
+isCol = 1
+
+@hook.subscribe.layout_change
+def set_isCol(layout, group):
+    if (layout == layout.Column):
+        isCol = 1
+    else:
+        isCol = 0
 
 def init_screens():
-    return [Screen(left=bar.Gap(margin), right=bar.Gap(margin), bottom=bar.Gap(margin), top=bar.Bar(widgets=init_widgets_screen1(), size=20, opacity=0.95)),
-            Screen(left=bar.Gap(margin), right=bar.Gap(margin), bottom=bar.Gap(margin), top=bar.Bar(widgets=init_widgets_screen1(), size=20, opacity=0.95))]
+    # return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=20, opacity=0.95)),
+    #         Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=20, opacity=0.95))]
+    return [Screen(left=bar.Gap(col_mar*isCol), right=bar.Gap(col_mar*isCol), bottom=bar.Gap(col_mar*isCol), top=bar.Bar(widgets=init_widgets_screen1(), size=20, opacity=0.95, margin=col_mar)),
+            Screen(left=bar.Gap(col_mar*isCol), right=bar.Gap(col_mar*isCol), bottom=bar.Gap(col_mar*isCol), top=bar.Bar(widgets=init_widgets_screen2(), size=20, opacity=0.95, margin=col_mar))]
 screens = init_screens()
 
-############################################################
-## => CONFIGS
-############################################################
 # MOUSE CONFIGURATION
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(),
@@ -496,47 +477,6 @@ mouse = [
 
 dgroups_key_binder = None
 dgroups_app_rules = []
-
-############################################################
-## => ASSIGN APPS TO GROUPS
-############################################################
-# ASSIGN APPLICATIONS TO A SPECIFIC GROUPNAME
-# BEGIN
-# @hook.subscribe.client_new
-# def assign_app_group(client):
-#     d = {}
-#     #####################################################################################
-#     ### Use xprop fo find  the value of WM_CLASS(STRING) -> First field is sufficient ###
-#     #####################################################################################
-#     d[group_names[0]] = ["Navigator", "Firefox", "Vivaldi-stable", "Vivaldi-snapshot", "Chromium", "Google-chrome", "Brave", "Brave-browser",
-#               "navigator", "firefox", "vivaldi-stable", "vivaldi-snapshot", "chromium", "google-chrome", "brave", "brave-browser", ]
-#     d[group_names[1]] = [ "Atom", "Subl3", "Geany", "Brackets", "Code-oss", "Code", "TelegramDesktop", "Discord",
-#                "atom", "subl3", "geany", "brackets", "code-oss", "code", "telegramDesktop", "discord", ]
-#     d[group_names[2]] = ["Inkscape", "Nomacs", "Ristretto", "Nitrogen", "Feh",
-#               "inkscape", "nomacs", "ristretto", "nitrogen", "feh", ]
-#     d[group_names[3]] = ["Gimp", "gimp" ]
-#     d[group_names[4]] = ["Meld", "meld", "org.gnome.meld" "org.gnome.Meld" ]
-#     d[group_names[5]] = ["Vlc","vlc", "Mpv", "mpv" ]
-#     d[group_names[6]] = ["VirtualBox Manager", "VirtualBox Machine", "Vmplayer",
-#               "virtualbox manager", "virtualbox machine", "vmplayer", ]
-#     d[group_names[7]] = ["Thunar", "Nemo", "Caja", "Nautilus", "org.gnome.Nautilus", "Pcmanfm", "Pcmanfm-qt",
-#               "thunar", "nemo", "caja", "nautilus", "org.gnome.nautilus", "pcmanfm", "pcmanfm-qt", ]
-#     d[group_names[8]] = ["Evolution", "Geary", "Mail", "Thunderbird",
-#               "evolution", "geary", "mail", "thunderbird" ]
-#     d[group_names[9]] = ["Spotify", "Pragha", "Clementine", "Deadbeef", "Audacious",
-#               "spotify", "pragha", "clementine", "deadbeef", "audacious" ]
-#     ######################################################################################
-#
-# wm_class = client.window.get_wm_class()[0]
-#
-#     for i in range(len(d)):
-#         if wm_class in list(d.values())[i]:
-#             group = list(d.keys())[i]
-#             client.togroup(group)
-#             client.group.cmd_toscreen(toggle=False)
-
-# END
-# ASSIGN APPLICATIONS TO A SPECIFIC GROUPNAME
 
 ############################################################
 ## => FUNCTIONS
@@ -560,7 +500,6 @@ def set_floating(window):
         window.floating = True
 
 floating_types = ["notification", "toolbar", "splash", "dialog"]
-
 
 follow_mouse_focus = True
 bring_front_click = False
@@ -590,7 +529,7 @@ floating_layout = layout.Floating(float_rules=[
     {'wname': 'pinentry'},
     {'wmclass': 'ssh-askpass'},
 
-],  fullscreen_border_width = 2, border_width = 2)
+],  fullscreen_border_width = 0, border_width = border_width)
 auto_fullscreen = True
 
 focus_on_window_activation = "focus" # or smart

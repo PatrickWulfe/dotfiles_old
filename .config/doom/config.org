@@ -4,6 +4,7 @@
 #+PROPERTY: header-args:emacs-lisp :tangle config.el
 
 * User info
+Setting personal info
 #+begin_src elisp
 (setq user-full-name "Patrick Wulfe"
       user-mail-address "wulfep@gmail.com")
@@ -11,19 +12,24 @@
 
 * UI
 ** Fonts
+I really like the 'r' and 'g' in Fira Code, so it's my favorite font for coding
+Open sans is close to the sans font Google uses for Android, which I'm a big fan of
 #+begin_src elisp
 (setq doom-font (font-spec :family "Fira Code" :size 16 :weight 'medium)
-      doom-variable-pitch-font (font-spec :family "Noto Sans" :size 13)
-      doom-big-font (font-spec :family "Literation Sans")
+      doom-variable-pitch-font (font-spec :family "Open Sans" :size 13)
+      doom-big-font (font-spec :family "Open Sans")
+      doom-serif-font (font-spec :family "Fira Code" :weigth 'light)
       )
 #+end_src
 
 ** Theme
+I customized the horizon theme to adjust some of the syntax colors and background
 #+begin_src elisp
 (setq doom-theme 'my-doom-horizon)
 #+end_src
 
 ** Nyan-Mode
+Adds the Nyan-cat progress bar on the modeline
 #+begin_src elisp
 (use-package! nyan-mode
   :after doom-modeline
@@ -34,17 +40,23 @@
 #+end_src
 
 ** Rainbow Delimiters
+Rainbow delimiters are amazing, incredibly useful for lisp and other languages that are parenth heavy
 #+begin_src elisp
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 #+end_src
 
 ** Line Numbers
+Relative line numbers to make vim commands easier
 #+begin_src elisp
 (setq display-line-numbers-type 'relative)
 #+end_src
 
 ** Scroll margin
+Next 3 blocks based on:
 https://github.com/martinbaillie/dotfiles/blob/master/config/emacs/config.org
+
+Adds a scroll margin so I can always see code above/below cursor and disables it in places where it can cause issues
+Sets up automatic scrolling
 #+begin_src elisp
 (setq
  scroll-conservatively 10
@@ -56,11 +68,13 @@ https://github.com/martinbaillie/dotfiles/blob/master/config/emacs/config.org
 #+end_src
 
 ** Remove Scrollbars
+We have nyan-mode so the scrollbar is redundant
 #+begin_src elisp
 (scroll-bar-mode -1)
 #+end_src
 
 ** Modeline
+Clean up the modeline some, this also fixes the nyan-bar moving around which was annoying
 #+begin_src elisp
 (after! doom-modeline
   (doom-modeline-def-modeline 'main
@@ -70,12 +84,15 @@ https://github.com/martinbaillie/dotfiles/blob/master/config/emacs/config.org
                 input-method indent-info buffer-encoding major-mode
                 process vcs checker matches)))
 #+end_src
+
 ** Disable exit prompt
+Annoying and not useful when I want to be able to get in/out of Emacs in as little time as possible
 #+begin_src elisp
 (setq confirm-kill-emacs nil)
 #+end_src
 
 ** Tabs
+They're here if I want them, added a keybind to enable/disable them in the keybinds section
 #+begin_src elisp
 (setq centaur-tabs-height 32
       centaur-tabs-style "wave")
@@ -83,6 +100,7 @@ https://github.com/martinbaillie/dotfiles/blob/master/config/emacs/config.org
 
 * General Config
 ** Linux Specifics
+Adds opacity on Linux, I usually keep this high otherwise text can become hard to read
 #+begin_src elisp
 (when IS-LINUX
   (set-frame-parameter (selected-frame) 'alpha '(99 . 99))
@@ -98,128 +116,72 @@ Increase the limit and give more fine tuned control on undo
 #+end_src
 
 ** Enable auto-save and backup files
+Enable recovering files
 #+begin_src elisp
-(setq auto-save-default t
-      make-backup-files t)
+;; (setq auto-save-default t
+;;       make-backup-files t)
 #+end_src
 
 ** Folder locations
+Set default folder locations
 #+begin_src elisp
 (setq org-directory "~/org/")
 #+end_src
 
 * Package Settings
 ** Evil-Motion-Trainer
+The popup notification is working, but I think it may be incompatible with Doom 3.0's alpha. May re-enable if it gets updated
 #+begin_src elisp
-(use-package! evil-motion-trainer
-  :init
-  (global-evil-motion-trainer-mode 1)
-  :config
-  (setq evil-motion-trainer-threshold 3))
-;; (setq evil-motion-trainer-super-annoying-mode t)
-(map!
- :leader
- (:prefix-map ("t" . "toggle")
-  :desc "Evil motion trainer" "t" #'evil-motion-trainer-mode))
+;; (use-package! evil-motion-trainer
+;;   :init
+;;   (global-evil-motion-trainer-mode 1)
+;;   :config
+;;   (setq evil-motion-trainer-threshold 3))
+;; ;; (setq evil-motion-trainer-super-annoying-mode t)
+;; (map!
+;;  :leader
+;;  (:prefix-map ("t" . "toggle")
+  ;; :desc "Evil motion trainer" "t" #'evil-motion-trainer-mode))
 #+end_src
 
 ** Evil-Snipe
+Setting the scope for evil-snipe, the default is in line, which isn't nearly as useful
 #+begin_src elisp
 (setq evil-snipe-scope 'visible
       evil-snipe-spillover-scope 'buffer)
 #+end_src
 
+** Mixed-pitch
+Add support for multiple fonts
+#+begin_src elisp
+(use-package mixed-pitch
+  :hook
+  (text-mode . mixed-pitch-mode))
+#+end_src
+
 ** Projectile
+Add default project directory for projectile
 #+begin_src elisp
 (setq projectile-project-search-path '("~/dev/src/"))
 #+end_src
 
-** Sublimity
-#+begin_src elisp
-(require 'sublimity)
-(require 'sublimity-scroll)
-;; (sublimity-mode 1)
-(setq sublimity-scroll-weight 100
-      sublimity-scroll-drift-length 100)
-#+end_src
-
 ** Treemacs
+Default doom theme is minimal and doesn't use file type icons, I much prefer this one
 #+begin_src elisp
 (setq doom-themes-treemacs-theme "doom-colors")
 #+end_src
 
 ** Yasnippets
+Add custom snippet folder to personal config location for easy access with "SPC f p"
 #+begin_src elisp
 (use-package doom-snippets
   :load-path "~/.config/doom/snippets"
   :after yasnippet)
 #+end_src
+
 * Keybinds
-** General
-*** Switch execute command and dired jump
-#+begin_src elisp
-(map! :leader
-      :desc "M-x" "SPC" #'execute-extended-command
-      :desc "Find file in project" ":" #'projectile-find-file)
-#+end_src
-
-*** Set ',' as localleadder
-#+begin_src elisp
-(setq doom-leader-key "SPC"
-      doom-localleader-key ",")
-#+end_src
-
-*** Leader general commands
-#+begin_src elisp
-(map! :leader
-      :desc "Comment operator" ";" #'evilnc-comment-operator
-      :desc "Open vterm" "v" #'vterm)
-#+end_src
-
-** Evil-Easymotion
-#+begin_src elisp
-(map! (:after evil-easymotion :leader "j" evilem-map))
-(map! :leader :prefix ("j" . "jump"))
-#+end_src
-
-** Projectile
-#+begin_src elisp
-(map! :leader
-      :desc "Go to test/implimentation file" "p j"
-      #'projectile-toggle-between-implementation-and-test)
-#+end_src
-
-** Sublimity
-#+begin_src elisp
-(map! :leader
-      :desc "Sublimity" "t S" #'sublimity-mode)
-#+end_src
-
-** Yasnippet
-Adding some utility binds
-#+begin_src elisp
-(map! :leader
-      (:prefix ("y" . "snippets")
-       :desc "Insert" "i" #'yas-insert-snippet
-       :desc "New" "n" #'yas-new-snippet
-       :desc "Tryout" "t" #'yas-tryout-snippet
-      ))
-#+end_src
-
-** Tabs
-Just wanted to be able to turn tabs on/off
-#+begin_src elisp
-(map! :leader
-      :desc "Tabs" "t T" #'centaur-tabs-mode)
-#+end_src
-
-** Babel
-#+begin_src elisp
-(map! :leader
-      :desc "Org babel tangle" "m B" #'org-babel-tangle)
-#+end_src
-
 ** Dotfiles
+Add bands to quickly access my dotfiles within Emacs
 #+begin_src elisp
 (map! :leader
         (:prefix ("f ." . "open dotfile")
@@ -230,9 +192,75 @@ Just wanted to be able to turn tabs on/off
          ))
 #+end_src
 
+** Evil-Easymotion
+Also prefer "SPC j" over "g s" for easymotion like in Spacemacs
+#+begin_src elisp
+(map! (:after evil-easymotion :leader "j" evilem-map))
+(map! :leader :prefix ("j" . "jump"))
+#+end_src
+
+** General
+*** Switch execute command and dired jump
+I use M-x much more often and dired jump is redundent anyway since it is also bound to "SPC p f"
+#+begin_src elisp
+(map! :leader
+      :desc "M-x" "SPC" #'execute-extended-command
+      :desc "Find file in project" ":" #'projectile-find-file)
+#+end_src
+
+*** Set ',' as localleadder
+I use this often enough that it's worth mapping the localleader away from "SPC m"
+#+begin_src elisp
+(setq doom-leader-key "SPC"
+      doom-localleader-key ",")
+#+end_src
+
+*** Leader general commands
+I prefer having the comment operator bound like in Spacemacs over "g c"
+Also wanted a bind to launch vterm
+#+begin_src elisp
+(map! :leader
+      :desc "Comment operator" ";" #'evilnc-comment-operator
+      :desc "Open vterm" "v" #'vterm)
+#+end_src
+
+** Org-mode
+Add some org-mode keybinds
+#+begin_src elisp
+(after! org (map! :localleader
+                  :map org-mode-map
+                  :desc "Org babel tangle" "B" #'org-babel-tangle))
+#+end_src
+** Projectile
+#+begin_src elisp
+Add bind to go back and forth between test and implimentation files, useful for TDD and BDD
+(map! :leader
+      :desc "Go to test/implimentation file" "p j"
+      #'projectile-toggle-between-implementation-and-test)
+#+end_src
+
+** Tabs
+Just wanted to be able to turn tabs on/off
+#+begin_src elisp
+(map! :leader
+      :desc "Tabs" "t T" #'centaur-tabs-mode)
+#+end_src
+
+** Yasnippet
+Adding some utility binds for snippets
+#+begin_src elisp
+(map! :leader
+      (:prefix ("y" . "snippets")
+       :desc "Insert" "i" #'yas-insert-snippet
+       :desc "New" "n" #'yas-new-snippet
+       :desc "Tryout" "t" #'yas-tryout-snippet
+      ))
+#+end_src
+
 * Lang Specific Configs
 ** Flutter
 *** Flutter setup with major mode keybinds
+Setting up  Doom to be a Flutter IDE
 #+begin_src elisp
 (use-package lsp-dart
   :init
