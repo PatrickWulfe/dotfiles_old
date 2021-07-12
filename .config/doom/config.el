@@ -56,6 +56,8 @@
 
 (setq org-directory "~/org/")
 
+(setq +lsp-company-backends '(:separate company-yasnippet company-capf))
+
 ;; (use-package! evil-motion-trainer
 ;;   :init
 ;;   (global-evil-motion-trainer-mode 1)

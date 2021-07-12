@@ -129,6 +129,12 @@ Set default folder locations
 #+end_src
 
 * Package Settings
+** Company
+Move snippets above lsp
+#+begin_src elisp
+(setq +lsp-company-backends '(:separate company-yasnippet company-capf))
+#+end_src
+
 ** Evil-Motion-Trainer
 The popup notification is working, but I think it may be incompatible with Doom 3.0's alpha. May re-enable if it gets updated
 #+begin_src elisp

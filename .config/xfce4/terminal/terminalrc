@@ -39,7 +39,7 @@ ScrollingLines=10000
 ScrollingOnOutput=FALSE
 ScrollingUnlimited=TRUE
 DropdownPositionVertical=8
-ColorUseTheme=TRUE
 RunCustomCommand=TRUE
 CustomCommand=fish
+ColorUseTheme=TRUE
 
