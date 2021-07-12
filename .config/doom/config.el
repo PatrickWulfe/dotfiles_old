@@ -107,7 +107,6 @@
                   :map org-mode-map
                   :desc "Org babel tangle" "B" #'org-babel-tangle))
 
-Add bind to go back and forth between test and implimentation files, useful for TDD and BDD
 (map! :leader
       :desc "Go to test/implimentation file" "p j"
       #'projectile-toggle-between-implementation-and-test)
