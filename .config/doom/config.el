@@ -9,10 +9,21 @@
 
 (setq doom-theme 'my-doom-horizon)
 
+(defface font-lock-operator-face
+  '((t (:foreground "#21BFC2"))) "Basic face for operator." :group 'basic-faces)
+;; C-Like
+(dolist (mode-iter '(c-mode c++-mode dart-mode glsl-mode java-mode javascript-mode rust-mode))
+  (font-lock-add-keywords mode-iter
+   '(("\\([~^&\|!<>=,.\\+*/%-;:?]\\)" 0 'font-lock-operator-face keep))))
+;; Scripting
+(dolist (mode-iter '(python-mode lua-mode))
+  (font-lock-add-keywords mode-iter
+   '(("\\([@~^&\|!<>:=,.\\+*/%-]\\)" 0 'font-lock-operator-face keep))))
+
 (use-package! nyan-mode
   :after doom-modeline
   :init
-  (setq nyan-bar-length 20)
+  (setq nyan-bar-length 40)
    (nyan-mode)
   )
 
@@ -43,10 +54,10 @@
 (setq centaur-tabs-height 32
       centaur-tabs-style "wave")
 
-(when IS-LINUX
-  (set-frame-parameter (selected-frame) 'alpha '(99 . 99))
-  (add-to-list 'default-frame-alist '(alpha . (99 . 99)))
-  (add-to-list 'default-frame-alist '(inhibit-double-buffering . t)))
+;; (when IS-LINUX
+;;   (set-frame-parameter (selected-frame) 'alpha '(99 . 99))
+;;   (add-to-list 'default-frame-alist '(alpha . (99 . 99)))
+;;   (add-to-list 'default-frame-alist '(inhibit-double-buffering . t)))
 
 (setq undo-limit 80000000
       evil-want-fine-undo t)
@@ -60,14 +71,14 @@
 
 ;; (use-package! evil-motion-trainer
 ;;   :init
-;;   (global-evil-motion-trainer-mode 1)
-;;   :config
-;;   (setq evil-motion-trainer-threshold 3))
+;;   (global-evil-motion-trainer-mode 1))
+;;   ;; :config
+;;   ;; (setq evil-motion-trainer-threshold 3))
 ;; ;; (setq evil-motion-trainer-super-annoying-mode t)
 ;; (map!
 ;;  :leader
 ;;  (:prefix-map ("t" . "toggle")
-  ;; :desc "Evil motion trainer" "t" #'evil-motion-trainer-mode))
+;;   :desc "Evil motion trainer" "t" #'evil-motion-trainer-mode))
 
 (setq evil-snipe-scope 'visible
       evil-snipe-spillover-scope 'buffer)
@@ -77,6 +88,12 @@
   (text-mode . mixed-pitch-mode))
 
 (setq projectile-project-search-path '("~/dev/src/"))
+
+(setq projectile-create-missing-test-files t)
+
+;; (require 'sublimity-attractive)
+;; (sublimity-mode 1)
+;; (setq sublimity-attractive-centering-width 170)
 
 (setq doom-themes-treemacs-theme "doom-colors")
 
@@ -88,7 +105,7 @@
         (:prefix ("f ." . "open dotfile")
          :desc "Edit doom config.org" "d" #'(lambda () (interactive) (find-file "~/.config/doom/config.org"))
          :desc "Open qtile README.org" "q" #'(lambda () (interactive) (find-file "~/.config/qtile/README.org"))
-         :desc "Edit alacritty alacritty.yml" "a" #'(lambda () (interactive) (find-file "~/.config/alacritty/alacritty.yml"))
+         :desc "Edit alacritty.yml" "a" #'(lambda () (interactive) (find-file "~/.config/alacritty/alacritty.yml"))
          :desc "Open fish README.org" "f" #'(lambda () (interactive) (find-file "~/.config/fish/README.org"))
          ))
 

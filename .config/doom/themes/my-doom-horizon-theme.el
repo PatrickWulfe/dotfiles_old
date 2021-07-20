@@ -36,8 +36,8 @@
   "A port of the port of the Visual Studio Code theme Horizon"
 
   ;; name       default    256       16
-  ((bg         '("#16161c" nil       nil            ))
-   (bg-alt     '("#1C1E26" nil       nil            ))
+  ((bg         '("#232530" nil       nil            ))
+   (bg-alt     '("#1c1e26" nil       nil            ))
    (base0      '("#16161c" "black"   "black"        ))
    (base1      '("#1a1c23" "#111111" "brightblack"  ))
    (base2      '("#1d1f27" "#333333" "brightblack"  ))
@@ -83,7 +83,7 @@
    (operators      teal)
    (type           yellow)
    (strings        green)
-   (variables      red)
+   (variables      fg)
    (numbers        dark-blue)
    (region         hor-highlight)
    (error          red)

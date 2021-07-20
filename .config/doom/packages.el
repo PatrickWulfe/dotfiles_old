@@ -57,4 +57,6 @@
 (package! nyan-mode)
 (package! ob-dart)
 (package! sublimity)
+;; (package! sublimity-scroll)
+;; (package! sublimity-attractive)
 (package! treemacs-all-the-icons)

@@ -194,7 +194,7 @@ for i in groups:
     ])
 
 border_width = 2
-margin = 24
+margin = 12
 col_mar = 12
 def init_layout_theme():
     return {"margin":margin,
