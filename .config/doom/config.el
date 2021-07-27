@@ -35,19 +35,8 @@
  scroll-conservatively 10
  scroll-step 1
  scroll-margin 10)
-(add-hook 'term-mode-hook (λ! (setq-local scroll-margin 0)))
-(add-hook 'vterm-mode-hook (λ! (setq-local scroll-margin 0)))
-(add-hook 'ivy-mode-hook (λ! (setq-local scroll-margin 0)))
 
 (scroll-bar-mode -1)
-
-(after! doom-modeline
-  (doom-modeline-def-modeline 'main
-    '(bar window-number modals workspace-name buffer-info word-count
-    remote-host parrot buffer-position selection-info)
-  '(objed-state persp-name grip irc mu4e gnus debug repl lsp minor-modes
-                input-method indent-info buffer-encoding major-mode
-                process vcs checker matches)))
 
 (setq confirm-kill-emacs nil)
 
@@ -61,9 +50,6 @@
 
 (setq undo-limit 80000000
       evil-want-fine-undo t)
-
-;; (setq auto-save-default t
-;;       make-backup-files t)
 
 (setq org-directory "~/org/")
 

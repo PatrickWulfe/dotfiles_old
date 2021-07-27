@@ -54,6 +54,7 @@
   :recipe (:host github :repo "martinbaillie/evil-motion-trainer"))
 (package! flutter)
 (package! flutter-l10n-flycheck)
+(package! flycheck-projectile)
 (package! nyan-mode)
 (package! ob-dart)
 (package! sublimity)

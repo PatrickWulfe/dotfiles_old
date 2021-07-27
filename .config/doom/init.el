@@ -23,7 +23,8 @@
        (company +childframe)                  ; the ultimate code completion backend
        ;;helm                   ; the *other* search engine for love and life
        ;;ido                    ; the other *other* search engine...
-       (ivy +icons +prescient)        ; a search engine for love and life
+       (ivy +icons
+            +fuzzy +prescient)        ; a search engine for love and life
 
        :ui
        ;;deft                   ; notational velocity for Emacs
@@ -80,8 +81,8 @@
 
        :checkers
        syntax                   ; tasing you for every semicolon you forget
-       spell                    ; tasing you for misspelling mispelling
-       grammar                  ; tasing grammar mistake every you make
+       ;; spell                    ; tasing you for misspelling mispelling
+       ;; grammar                  ; tasing grammar mistake every you make
 
        :tools
        ;;ansible

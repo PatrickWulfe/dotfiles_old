@@ -67,37 +67,17 @@ Relative line numbers to make vim commands easier
 #+end_src
 
 ** Scroll margin
-Next 3 blocks based on:
-https://github.com/martinbaillie/dotfiles/blob/master/config/emacs/config.org
-
-Adds a scroll margin so I can always see code above/below cursor and disables it in places where it can cause issues
-Sets up automatic scrolling
 #+begin_src elisp
 (setq
  scroll-conservatively 10
  scroll-step 1
  scroll-margin 10)
-(add-hook 'term-mode-hook (λ! (setq-local scroll-margin 0)))
-(add-hook 'vterm-mode-hook (λ! (setq-local scroll-margin 0)))
-(add-hook 'ivy-mode-hook (λ! (setq-local scroll-margin 0)))
 #+end_src
 
 ** Remove Scrollbars
 We have nyan-mode so the scrollbar is redundant
 #+begin_src elisp
 (scroll-bar-mode -1)
-#+end_src
-
-** Modeline
-Clean up the modeline some, this also fixes the nyan-bar moving around which was annoying
-#+begin_src elisp
-(after! doom-modeline
-  (doom-modeline-def-modeline 'main
-    '(bar window-number modals workspace-name buffer-info word-count
-    remote-host parrot buffer-position selection-info)
-  '(objed-state persp-name grip irc mu4e gnus debug repl lsp minor-modes
-                input-method indent-info buffer-encoding major-mode
-                process vcs checker matches)))
 #+end_src
 
 ** Disable exit prompt
@@ -128,13 +108,6 @@ Increase the limit and give more fine tuned control on undo
 #+begin_src elisp
 (setq undo-limit 80000000
       evil-want-fine-undo t)
-#+end_src
-
-** Enable auto-save and backup files
-Enable recovering files
-#+begin_src elisp
-;; (setq auto-save-default t
-;;       make-backup-files t)
 #+end_src
 
 ** Folder locations
@@ -192,11 +165,13 @@ Prompt to create new test file when not found
 #+end_src
 
 ** Sublimity
+Enables an attractive centered mode
 #+begin_src elisp
 ;; (require 'sublimity-attractive)
 ;; (sublimity-mode 1)
 ;; (setq sublimity-attractive-centering-width 170)
 #+end_src
+
 ** Treemacs
 Default doom theme is minimal and doesn't use file type icons, I much prefer this one
 #+begin_src elisp
@@ -261,6 +236,7 @@ Add some org-mode keybinds
                   :map org-mode-map
                   :desc "Org babel tangle" "B" #'org-babel-tangle))
 #+end_src
+
 ** Projectile
 Add bind to go back and forth between test and implimentation files, useful for TDD and BDD
 #+begin_src elisp
@@ -319,6 +295,7 @@ I have keybinds for these, and the goal is to never use the mouse, so I'll never
   :config
   (flutter-l10n-flycheck-setup))
 #+end_src
+
 *** Projectile
 #+begin_src elisp
 (with-eval-after-load 'projectile
