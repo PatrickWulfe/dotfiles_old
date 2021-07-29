@@ -45,6 +45,7 @@ picom --config $HOME/.config/qtile/scripts/picom.conf &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 #sudo nice -n -20 udevmon -c udevmon.yaml >udevmon.log 2>udevmon.err &
 #caps2esc &
+setxkbmap -layout us -option ctrl:nocaps &
 xcape -e 'Control_L=Escape' &
 # xcape -e 'Shift_L=Tab' &
 guake &
