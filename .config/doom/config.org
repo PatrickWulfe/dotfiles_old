@@ -308,3 +308,37 @@ I have keybinds for these, and the goal is to never use the mouse, so I'll never
                                   :test-dir "test/"
                                   :test-suffix "_test")
 #+end_src
+
+** JavaScript
+*** dap-mode setup
+Set up dap mode for debugging JS
+#+begin_src elisp
+(require 'dap-node)
+#+end_src
+
+*** Keybinds
+https://www.chadstovern.com/javascript-in-emacs-revisited/
+#+begin_src elisp
+(use-package rjsx-mode
+  :init
+  (map! :map rjsx-mode-map
+        (:localleader
+         (:prefix ("n" . "node")
+                    "b" #'nodejs-repl-send-buffer)
+         (:prefix ("t" . "tide")
+                    "f" #'tide-format
+                    "r" #'tide-restart-server)
+                   ))
+  :config
+  (setq js2-mode-show-strict-warnings t))
+#+end_src
+
+*** Prettier
+#+begin_src elisp
+(setq prettier-js-args '(
+                         "--trailing-comma" "all"
+                         "--single-quote" "true"
+                         "--jsx-single-quote" "true"
+                         "--jsx-bracket-same-line" "false"
+                         ))
+#+end_src

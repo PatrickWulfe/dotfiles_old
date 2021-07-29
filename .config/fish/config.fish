@@ -9,9 +9,10 @@ fish_vi_key_bindings
 set -x ANDROID_HOME $HOME/Android/Sdk
 set -x DOCKER_HOST unix:///run/user/1000/docker.sock
 set -x CHROME_EXECUTABLE google-chrome-stable
-set -Ux JAVA_OPTS '' #'-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
+set -Ux JAVA_OPTS '' # '-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
 set -Ux JAVA_HOME /usr/lib/jvm/java-16-jdk
 set -Ux ANDROID_SDK_ROOT /opt/android-sdk
+set -Ux NODE_REPL_MODE strict
 
 set EDITOR emacs
 

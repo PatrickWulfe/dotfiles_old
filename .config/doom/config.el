@@ -155,3 +155,25 @@
                                   :test "flutter test"
                                   :test-dir "test/"
                                   :test-suffix "_test")
+
+(require 'dap-node)
+
+(use-package rjsx-mode
+  :init
+  (map! :map rjsx-mode-map
+        (:localleader
+         (:prefix ("n" . "node")
+                    "b" #'nodejs-repl-send-buffer)
+         (:prefix ("t" . "tide")
+                    "f" #'tide-format
+                    "r" #'tide-restart-server)
+                   ))
+  :config
+  (setq js2-mode-show-strict-warnings t))
+
+(setq prettier-js-args '(
+                         "--trailing-comma" "all"
+                         "--single-quote" "true"
+                         "--jsx-single-quote" "true"
+                         "--jsx-bracket-same-line" "false"
+                         ))
