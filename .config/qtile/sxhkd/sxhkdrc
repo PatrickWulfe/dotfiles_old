@@ -10,9 +10,9 @@
 super + F1
 	google-chrome-stable
 
-# Emacs
+# Vscode
 super + F2
-	emacs
+	code
 
 #Inkscape
 super + F3
@@ -66,9 +66,9 @@ super + e
 super + b
     google-chrome-stable
 
-#Conky-toggle
+#Vscode
 super + c
-    conky-toggle
+    code
 
 #Htop
 #super + h
