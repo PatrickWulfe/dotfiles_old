@@ -132,96 +132,10 @@ super + shift + s
 #super + shift + KP_Enter
 #	thunar
 
-
-#################################################################
-# CONTROL + ALT KEYS
-#################################################################
-
-#arcolinux-welcome-app
-ctrl + alt + w
-     arcolinux-welcome-app
-
-#arcolinux-tweak-tool
-ctrl + alt + e
-    arcolinux-tweak-tool
-
-#conky-rotate
-ctrl + alt + Next
-     conky-rotate -n
-
-#conky-rotate
-ctrl + alt + Prior
-    conky-rotate -p
-
-#File-Manager
-ctrl + alt + b
-     thunar
-
-#Catfish
-ctrl + alt + c
-     catfish
-
-#Chromium
-ctrl + alt + g
-    chromium -no-default-browser-check
-
-#Firefox
-ctrl + alt + f
-     firefox
-
-#Nitrogen
-ctrl + alt + i
-     nitrogen
-
-#arcolinux-logout
-ctrl + alt + k
-     arcolinux-logout
-
-#arcolinux-logout
-ctrl + alt + l
-    arcolinux-logout
-
 #Pamac-manager
-ctrl + alt + p
+super + p
     pamac-manager
 
-#Xfce4-settings-manager
-ctrl + alt + m
-     xfce4-settings-manager
-
-#Pulse Audio Control
-ctrl + alt + u
-     pavucontrol
-
-#Rofi theme selector
-ctrl + alt + r
-  rofi-theme-selector
-
-#Spotify
-ctrl + alt + s
-   spotify
-
-#alacritty
-ctrl + alt + Return
-    alacritty
-
-#alacritty
-ctrl + alt + t
-    alacritty
-
-#Vivaldi
-ctrl + alt + v
-    vivaldi-stable
-
-#Xfce4-appfinder
-ctrl + alt + a
-    xfce4-appfinder
-
-
-#Keyboard dependent
-#urxvt
-#ctrl + alt + KP_Enter
-#     urxvt
 
 
 #################################################################
@@ -392,14 +306,6 @@ XF86MonBrightnessDown
 ##################   DESKTOP SPECIFIC    ########################
 #################################################################
 #################################################################
-
-#################################################################
-# CTRL + ALT KEYS
-#################################################################
-
-#Picom Toggle
-ctrl + alt + o
-    ~/.config/qtile/scripts/picom-toggle.sh
 
 #################################################################
 # SUPER + KEYS
