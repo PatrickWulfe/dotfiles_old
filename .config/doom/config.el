@@ -41,7 +41,7 @@
 (setq confirm-kill-emacs nil)
 
 (setq centaur-tabs-height 32
-      centaur-tabs-style "wave")
+      centaur-tabs-style "bar")
 
 ;; (when IS-LINUX
 ;;   (set-frame-parameter (selected-frame) 'alpha '(99 . 99))
@@ -68,6 +68,12 @@
 
 (setq evil-snipe-scope 'visible
       evil-snipe-spillover-scope 'buffer)
+
+(setq leetcode-prefer-language "cpp"
+ leetcode-prefer-sql "mysql"
+ leetcode-save-solutions t
+ leetcode-directory "~/dev/src/leetcode"
+)
 
 (use-package mixed-pitch
   :hook
@@ -125,6 +131,9 @@
        :desc "New" "n" #'yas-new-snippet
        :desc "Tryout" "t" #'yas-tryout-snippet
       ))
+
+(add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
 
 (use-package lsp-dart
   :init

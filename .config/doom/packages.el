@@ -55,6 +55,7 @@
 (package! flutter)
 (package! flutter-l10n-flycheck)
 (package! flycheck-projectile)
+(package! leetcode)
 (package! nyan-mode)
 (package! ob-dart)
 (package! sublimity)

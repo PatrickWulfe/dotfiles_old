@@ -13,6 +13,7 @@ set -Ux JAVA_OPTS '' # '-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.e
 set -Ux JAVA_HOME /usr/lib/jvm/java-16-jdk
 set -Ux ANDROID_SDK_ROOT /opt/android-sdk
 set -Ux NODE_REPL_MODE strict
+set -Ux JUCE_HOME /home/patrick/dev/src/juce/JUCE
 
 set EDITOR emacs
 
@@ -38,3 +39,4 @@ abbr v "emacs"
 abbr g "git"
 abbr n "naultilus"
 alias doom "~/.emacs.d/bin/doom"
+alias setJUCE "cp -r $JUCE_HOME/emptyJUCEProject/.vscode ./"

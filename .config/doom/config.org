@@ -90,7 +90,7 @@ Annoying and not useful when I want to be able to get in/out of Emacs in as litt
 They're here if I want them, added a keybind to enable/disable them in the keybinds section
 #+begin_src elisp
 (setq centaur-tabs-height 32
-      centaur-tabs-style "wave")
+      centaur-tabs-style "bar")
 #+end_src
 
 * General Config
@@ -143,6 +143,15 @@ Setting the scope for evil-snipe, the default is in line, which isn't nearly as 
 #+begin_src elisp
 (setq evil-snipe-scope 'visible
       evil-snipe-spillover-scope 'buffer)
+#+end_src
+
+** Leetcode
+#+begin_src elisp
+(setq leetcode-prefer-language "cpp"
+ leetcode-prefer-sql "mysql"
+ leetcode-save-solutions t
+ leetcode-directory "~/dev/src/leetcode"
+)
 #+end_src
 
 ** Mixed-pitch
@@ -264,6 +273,13 @@ Adding some utility binds for snippets
 #+end_src
 
 * Lang Specific Configs
+** C/C++
+*** Enable LSP on load for C/C++
+#+begin_src elisp
+(add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
+#+end_src
+
 ** Flutter
 *** Flutter setup with major mode keybinds
 Setting up Doom to be a Flutter IDE
